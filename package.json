@@ -6,8 +6,14 @@
   "scripts": {
     "start": "nodemon app.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "mongodb",
+    "nodejs",
+    "reactjs",
+    "expressjs",
+    "full stack developer"
+  ],
+  "author": "Darshan Ponikar",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
