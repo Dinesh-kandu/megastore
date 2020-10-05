@@ -32,7 +32,6 @@ const userSchema = new Schema({
     },
     encry_password: {
         type:String,
-        required:true,
     },
     salt: String,
     role: {
@@ -45,17 +44,15 @@ const userSchema = new Schema({
     }
 }, { timestamps: true });
 
-userSchema.method = {
+userSchema.methods = {
     securePassword: function(plainPassword) {
         if(!plainPassword) return "";
-
         try {
-            return crypto.createHmac("sha265", this.salt)
+            return crypto.createHash("sha256", this.salt)
                         .update(plainPassword)
                         .digest("hex");
         } catch(e) {
             console.log(e.message)
-            return "";
         }
     },
     autheticate: function(plainPassword) {
@@ -66,10 +63,15 @@ userSchema.method = {
 
 userSchema.virtual("password")
             .set(function(password) {
-                this._password = password;
-                this.salt = uuidV1();
-                this.encry_password = this.securePassword(password)
-            })
+                try {
+                    this._password = password;
+                    this.salt = uuidV1();
+                    this.encry_password = this.securePassword(password)
+                } catch(e) {
+                    console.log(e.message);
+                    return e.message;
+                }
+            }) 
             .get(function() {
                 return this._password;
             })
