@@ -9,6 +9,7 @@ const app = express();
 const authRoutes = require("./routes/Auth/auth.routes");
 const userRoutes = require("./routes/User/user.routes");
 const categoryRoutes = require("./routes/Category/category.routes");
+const productRoutes = require("./routes/Product/product.routes");
 
 // DB CONNECTIONS
 mongoose.connect(process.env.DATABASE_URL, {
@@ -26,10 +27,11 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors());
 
-// Routes
+// Routes Prefix
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
 app.use("/api", categoryRoutes);
+app.use("/api", productRoutes);
 
 app.listen(PORT, () => {
     console.log(`App is running on ${PORT}`);

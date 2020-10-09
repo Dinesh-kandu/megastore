@@ -22,9 +22,9 @@ const productScheme = new mongoose.Schema({
         maxlength: 32,
         trim:true,
     },
-    catrgory: {
+    category: {
         type: ObjectId,
-        ref: "Catrgory",
+        ref: "Category",
         required: true
     },
     stock: {
