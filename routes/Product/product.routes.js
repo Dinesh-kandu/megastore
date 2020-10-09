@@ -1,5 +1,6 @@
 
-const { createProduct, getProduct, deleteProduct, updateProduct, getProducts } = require("../../controllers/Product/product.controller");
+const { root } = require("npm");
+const { createProduct, getProduct, deleteProduct, updateProduct, getProducts, getProductsCategories } = require("../../controllers/Product/product.controller");
 const { getUserById } = require("../../controllers/User/user.controller");
 const { isSignedin, isAuthenicated, isAdmin } = require("../../middlewares/Auth/auth.middleware");
 const { getProductById, photo } = require("../../middlewares/Product/product.middleware");
@@ -35,5 +36,8 @@ router.put("/product/:productId/:userId",
 // listing product
 
 router.get("/products", getProducts);
+
+
+router.get("/products/categories", getProductsCategories);
 
 module.exports = router;

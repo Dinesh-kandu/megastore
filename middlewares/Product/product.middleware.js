@@ -24,3 +24,24 @@ exports.photo = (req, res, next) => {
     }
     next();
 }
+
+exports.updateStocks = (req, res, next) => {
+    let myOpreations = req.body.order.products.map(prod => {
+        return {
+            updateOne: {
+                filter: { _id: prod._id},
+                update: { $inc : { stock: -prod.count, sold: +prod.count }}
+            }
+        }
+    });
+
+    Product.bulkWrite(myOpreations, {}, (err, products) => {
+        if(err) {
+            return res.status(400).json({
+                message: err.message,
+                from: "Couldn't update Stocks"
+            })
+        }
+        next();
+    })
+}

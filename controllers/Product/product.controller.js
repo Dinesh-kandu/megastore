@@ -120,6 +120,7 @@ exports.getProducts = (req, res) => {
     Product.find()
         .select("-photo") // hide photo that is why "-"
         .limit(limit)
+        .populate("Category")
         .sort([[sortBy, "desc"]])
         .exec((err, products) => {
             if(err) {
@@ -131,4 +132,20 @@ exports.getProducts = (req, res) => {
 
             return res.json(products);
         })
+}
+
+exports.getProductsCategories = (req, res) => {
+
+    // distinct is basically a where clause of SQL
+    Product.distinct("category", {}, (err, categories) => {
+        if(err) {
+            res.status(400).json({
+                message: err.message,
+                from: "From get Product Categories"
+            });
+        }
+
+        return res.json(categories);
+    });
+
 }
